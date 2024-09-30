@@ -1,0 +1,28 @@
+[0.008s] Invoking command in '/workspaces/reuv/re-uv_ws/build/serial_util': CMAKE_PREFIX_PATH=/workspaces/reuv/re-uv_ws/install/serial:/workspaces/reuv/re-uv_ws/install/uv-vision:/workspaces/reuv/re-uv_ws/install/serial_util:/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/serial_util -- -j16 -l16
+[0.043s] Invoked command in '/workspaces/reuv/re-uv_ws/build/serial_util' returned '0': CMAKE_PREFIX_PATH=/workspaces/reuv/re-uv_ws/install/serial:/workspaces/reuv/re-uv_ws/install/uv-vision:/workspaces/reuv/re-uv_ws/install/serial_util:/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/serial_util -- -j16 -l16
+[0.064s] Invoking command in '/workspaces/reuv/re-uv_ws/build/serial_util': CMAKE_PREFIX_PATH=/workspaces/reuv/re-uv_ws/install/serial:/workspaces/reuv/re-uv_ws/install/uv-vision:/workspaces/reuv/re-uv_ws/install/serial_util:/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/serial_util
+[0.071s] -- Install configuration: ""
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include/serial_util
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include/serial_util/crc
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include/serial_util/crc/dji_crc.hpp
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include/serial_util/package_receive.hpp
+[0.071s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/include/serial_util/tick_timer.hpp
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/ament_index/resource_index/package_run_dependencies/serial_util
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/ament_index/resource_index/parent_prefix_path/serial_util
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/environment/ament_prefix_path.sh
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/environment/ament_prefix_path.dsv
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/environment/path.sh
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/environment/path.dsv
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/local_setup.bash
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/local_setup.sh
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/local_setup.zsh
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/local_setup.dsv
+[0.072s] -- Installing: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/package.dsv
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/ament_index/resource_index/packages/serial_util
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.072s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/cmake/serial_utilConfig.cmake
+[0.073s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/cmake/serial_utilConfig-version.cmake
+[0.073s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/serial_util/share/serial_util/package.xml
+[0.074s] Invoked command in '/workspaces/reuv/re-uv_ws/build/serial_util' returned '0': CMAKE_PREFIX_PATH=/workspaces/reuv/re-uv_ws/install/serial:/workspaces/reuv/re-uv_ws/install/uv-vision:/workspaces/reuv/re-uv_ws/install/serial_util:/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/serial_util

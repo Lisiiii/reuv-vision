@@ -1,0 +1,3 @@
+[submodule "re-uv_ws/src/ros2-serial"]
+	path = re-uv_ws/src/ros2-serial
+	url = https://github.com/Alliance-Algorithm/ros2-serial.git

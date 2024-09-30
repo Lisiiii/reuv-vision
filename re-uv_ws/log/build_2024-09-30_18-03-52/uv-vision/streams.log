@@ -1,0 +1,20 @@
+[0.008s] Invoking command in '/workspaces/reuv/re-uv_ws/build/uv-vision': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/uv-vision -- -j16 -l16
+[0.044s] Invoked command in '/workspaces/reuv/re-uv_ws/build/uv-vision' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/uv-vision -- -j16 -l16
+[0.071s] Invoking command in '/workspaces/reuv/re-uv_ws/build/uv-vision': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/uv-vision
+[0.077s] -- Install configuration: ""
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/ament_index/resource_index/package_run_dependencies/uv-vision
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/ament_index/resource_index/parent_prefix_path/uv-vision
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/environment/ament_prefix_path.sh
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/environment/ament_prefix_path.dsv
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/environment/path.sh
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/environment/path.dsv
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/local_setup.bash
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/local_setup.sh
+[0.077s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/local_setup.zsh
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/local_setup.dsv
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/package.dsv
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/ament_index/resource_index/packages/uv-vision
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/cmake/uv-visionConfig.cmake
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/cmake/uv-visionConfig-version.cmake
+[0.078s] -- Up-to-date: /workspaces/reuv/re-uv_ws/install/uv-vision/share/uv-vision/package.xml
+[0.079s] Invoked command in '/workspaces/reuv/re-uv_ws/build/uv-vision' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/uv-vision

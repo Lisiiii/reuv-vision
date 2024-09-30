@@ -1,0 +1,1 @@
+/workspaces/reuv/re-uv_ws/build/serial_util/ament_cmake_environment_hooks/local_setup.bash
