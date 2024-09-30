@@ -2,10 +2,10 @@
 
 #include <serial/serial.h>
 
-class Communication {
+class Communicator {
 public:
-    Communication();
-    ~Communication();
+    Communicator();
+    ~Communicator();
 
 private:
     void send();
