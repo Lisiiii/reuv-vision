@@ -1,50 +1,92 @@
 #pragma once
+
+#include "components.hpp"
+
 #include <iostream>
+#include <opencv2/core/types.hpp>
 #include <opencv2/opencv.hpp>
+#include <stdexcept>
+#include <vector>
+
+namespace reuv {
 
 class VisualTracker {
 public:
+    /**
+     * @brief Construct a new VisualTracker object
+     * @param video_capture The index of the camera to open or a video file path
+     */
     template <typename T>
     VisualTracker(T video_capture = 0)
     {
         if (!open_camera(video_capture))
-            std::cout << "Failed to open camera\n";
+            throw std::runtime_error("Failed to open camera\n");
     }
+
+    /**
+     * @brief Destroy the VisualTracker object
+     */
     ~VisualTracker()
     {
         cap_.release();
     }
 
-    void tracking()
+    /**
+     * @brief Start tracking
+     */
+    void track()
     {
-        // 读取视频帧
         cv::Mat frame;
         while (cap_.read(frame)) {
-            // 预处理图像
-            cv::Mat preprocessed_image = preprocess_image(frame);
-            // 检测边缘
-            cv::Mat edges = detect_edges(preprocessed_image);
-            // 清除噪声
-            cv::Mat cleared_edges = clear_noise(edges);
-            // 检测直线
-            std::vector<cv::Vec4i> lines = detect_lines(cleared_edges);
-            // 拟合车道线
-            std::vector<cv::Vec4i> lane_lines = fit_lanelines(lines);
-            // 计算车辆离车道线的位置
-            cv::Point distance_to_lane = calculate_distance_to_lane(frame, lane_lines);
-            // 显示结果
-            cv::circle(frame, distance_to_lane, 5, cv::Scalar(0, 0, 255), -1);
-            cv::imshow("Lane Detection", frame);
-            if (cv::waitKey(1) == 'q') {
-                break;
+            try {
+                // Preprocess the image
+                cv::Mat preprocessed_image = preprocess_image(frame);
+
+                // Detect edges
+                cv::Mat edges = detect_edges(preprocessed_image);
+
+                // Define ROI points
+                std::vector<cv::Point> roi_points = { { 0, frame.rows },
+                    { 0, frame.rows * 6 / 10 },
+                    { frame.cols, frame.rows * 6 / 10 },
+                    { frame.cols, frame.rows } };
+
+                // Extract ROI image
+                cv::Mat roi_image = reuv::basic_components::extract_ROI(edges, roi_points);
+
+                // Clear noise
+                cv::Mat cleared_edges = clear_noise(roi_image);
+
+                // Find lanelines
+                std::vector<cv::Point2f> lanelines = find_lanelines(cleared_edges);
+
+                // Draw lanelines
+                draw_lines(lanelines, frame);
+
+                // Calculate average intersection point
+                cv::Point2f average_point = compute_average_intersection_point(lanelines);
+                cv::circle(frame, average_point, 5, cv::Scalar(0, 255, 255), -1);
+                cv::line(frame, cv::Point(average_point.x, 0), cv::Point(average_point.x, frame.rows), cv::Scalar(0, 255, 0), 2);
+
+                // Display the frame
+                cv::imshow("Lane Detection", frame);
+                if (cv::waitKey(50) == 'q') {
+                    break;
+                }
+            } catch (const std::exception& e) {
+                std::cerr << e.what() << std::endl;
             }
         }
-    };
+    }
 
 private:
     cv::VideoCapture cap_;
 
-    // 预处理图像
+    /**
+     * @brief Preprocess the image
+     * @param image The input image
+     * @return The preprocessed image
+     */
     cv::Mat preprocess_image(const cv::Mat& image)
     {
         // 去除噪声
@@ -58,7 +100,11 @@ private:
         return adjusted_image;
     }
 
-    // 检测边缘
+    /**
+     * @brief Detect edges
+     * @param image The input image
+     * @return The detected edges
+     */
     cv::Mat detect_edges(const cv::Mat& image)
     {
         cv::Mat gray_image;
@@ -70,7 +116,11 @@ private:
         return edges;
     }
 
-    // 清除噪声
+    /**
+     * @brief Clear noise
+     * @param edges The input edges
+     * @return The cleared edges
+     */
     cv::Mat clear_noise(const cv::Mat& edges)
     {
         cv::Mat cleared_edges;
@@ -80,64 +130,103 @@ private:
         return cleared_edges;
     }
 
-    // 检测直线
-    std::vector<cv::Vec4i> detect_lines(const cv::Mat& edges)
+    /**
+     * @brief Find lanelines
+     * @param edges The input edges
+     * @return The detected lanelines
+     */
+    std::vector<cv::Point2f> find_lanelines(const cv::Mat& edges)
     {
-        std::vector<cv::Vec4i> lines;
-        cv::HoughLinesP(edges, lines, 1, CV_PI / 180, 50, 50, 10);
+        std::vector<cv::Point2f> lines;
+
+        cv::Mat lines_p;
+        cv::HoughLinesP(edges, lines_p, 1, CV_PI / 180, 100, 10, 10);
+
+        for (int i = 0; i < lines_p.rows; i++) {
+            cv::Vec4i line = lines_p.at<cv::Vec4i>(i);
+            float x1 = line[0], y1 = line[1], x2 = line[2], y2 = line[3];
+
+            // calculate slope and intercept
+            float slope = (y2 - y1) / (x2 - x1);
+            float intercept = y1 - slope * x1;
+
+            // store slope and intercept in cv::Point2f
+            cv::Point2f line_params(slope, intercept);
+            if (slope > 0.2 || slope < -0.2)
+                lines.push_back(line_params);
+        }
 
         return lines;
     }
 
-    // 拟合车道线
-    std::vector<cv::Vec4i> fit_lanelines(const std::vector<cv::Vec4i>& lines)
+    /**
+     * @brief Draw lanelines
+     * @param lines The detected lanelines
+     * @param image The input image
+     */
+    void draw_lines(const std::vector<cv::Point2f>& lines, cv::Mat& image)
     {
-        std::vector<cv::Vec4i> lane_lines;
+        for (const auto& line_params : lines) {
+            float slope = line_params.x;
+            float intercept = line_params.y;
 
-        // 选择可能是车道线的直线
+            int x1 = 0;
+            int y1 = static_cast<int>(slope * x1 + intercept);
+            int x2 = image.cols - 1;
+            int y2 = static_cast<int>(slope * x2 + intercept);
+
+            cv::line(image, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(0, 0, 255), 2);
+        }
+    }
+
+    /**
+     * @brief Compute the average intersection point
+     * @param lines The detected lanelines
+     * @return The average intersection point
+     */
+    cv::Point2f compute_average_intersection_point(const std::vector<cv::Point2f>& lines)
+    {
+        cv::Point2f intersection_point(0, 0);
+        std::vector<cv::Point2f> left_lines, right_lines;
+
         for (const auto& line : lines) {
-            // 计算直线的斜率
-            double slope = (line[3] - line[1]) / (double)(line[2] - line[0]);
+            float slope = line.x;
+            (slope < 0 ? left_lines : right_lines).push_back(line);
+        }
 
-            // 选择斜率在一定范围内的直线
-            if (slope > 0.5 && slope < 2.0) {
-                lane_lines.push_back(line);
+        for (const auto& left_line : left_lines) {
+            for (const auto& right_line : right_lines) {
+                float left_slope = left_line.x;
+                float left_intercept = left_line.y;
+                float right_slope = right_line.x;
+                float right_intercept = right_line.y;
+
+                float denominator = left_slope - right_slope;
+                if (denominator == 0) {
+                    continue;
+                }
+
+                float x = (right_intercept - left_intercept) / denominator;
+                float y = left_slope * x + left_intercept;
+
+                intersection_point += cv::Point2f(x, y);
             }
         }
 
-        return lane_lines;
-    }
-
-    // 计算车辆离车道线的位置
-    cv::Point calculate_distance_to_lane(const cv::Mat& image, const std::vector<cv::Vec4i>& lane_lines)
-    {
-        // 计算车辆中心的位置
-        cv::Point vehicle_center(image.cols / 2, image.rows / 2);
-
-        // 计算车辆离车道线的位置
-        cv::Point distance_to_lane(0, 0);
-
-        // 计算车辆离每条车道线的距离
-        for (const auto& line : lane_lines) {
-            // 计算直线的方程
-            double slope = (line[3] - line[1]) / (double)(line[2] - line[0]);
-            double intercept = line[1] - slope * line[0];
-
-            // 计算车辆中心到直线的距离
-            double distance = std::abs(slope * vehicle_center.x - vehicle_center.y + intercept) / std::sqrt(slope * slope + 1.0);
-
-            // 更新车辆离车道线的位置
-            distance_to_lane.x += distance;
-            distance_to_lane.y += slope;
+        if (left_lines.size() * right_lines.size() > 0) {
+            intersection_point.x /= left_lines.size() * right_lines.size();
+            intersection_point.y /= left_lines.size() * right_lines.size();
         }
 
-        // 计算平均距离
-        distance_to_lane.x /= lane_lines.size();
-        distance_to_lane.y /= lane_lines.size();
-
-        return distance_to_lane;
+        return intersection_point;
     }
 
+    /**
+     * @brief Open a camera or a video file
+     * @tparam T The type of the video capture
+     * @param video_capture The index of the camera to open or a video file path
+     * @return Whether the camera or video file is opened successfully
+     */
     template <typename T>
     bool open_camera(T video_capture)
     {
@@ -147,3 +236,4 @@ private:
         return 1;
     }
 };
+}

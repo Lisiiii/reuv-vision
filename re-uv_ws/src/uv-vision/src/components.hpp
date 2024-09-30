@@ -25,10 +25,13 @@ inline T get_intercept(T slope, const cv::Point_<T>& point)
  * @param points The points that define the ROI.
  * @return The extracted ROI.
  */
-template <typename T>
-inline cv::Mat ROI_extract(const cv::Mat& input_frame, const std::vector<cv::Point_<T>>& points)
+inline cv::Mat extract_ROI(const cv::Mat& image, const std::vector<cv::Point>& points)
 {
-    return input_frame(cv::Rect(points[0], points[1]));
+    cv::Mat mask = cv::Mat::zeros(image.size(), image.type());
+    cv::fillConvexPoly(mask, points, cv::Scalar(255, 255, 255));
+    cv::Mat result;
+    image.copyTo(result, mask);
+    return result;
 }
 
 /**
@@ -54,5 +57,4 @@ inline T get_slope(const cv::Point_<T>& pointA, const cv::Point_<T>& pointB)
 {
     return (pointB.y - pointA.y) / (pointB.x - pointA.x);
 }
-
 }

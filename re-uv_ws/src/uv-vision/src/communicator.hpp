@@ -2,6 +2,8 @@
 
 #include <serial/serial.h>
 
+namespace reuv {
+
 class Communicator {
 public:
     Communicator();
@@ -11,3 +13,4 @@ private:
     void send();
     void receive();
 };
+}
