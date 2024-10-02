@@ -14,9 +14,8 @@ namespace reuv::basic_components {
  * @return The intercept of the line.
  */
 template <typename T>
-inline T get_intercept(T slope, const cv::Point_<T>& point)
-{
-    return point.y - slope * point.x;
+inline T get_intercept(T slope, const cv::Point_<T> &point) {
+  return point.y - slope * point.x;
 }
 
 /**
@@ -25,13 +24,13 @@ inline T get_intercept(T slope, const cv::Point_<T>& point)
  * @param points The points that define the ROI.
  * @return The extracted ROI.
  */
-inline cv::Mat extract_ROI(const cv::Mat& image, const std::vector<cv::Point>& points)
-{
-    cv::Mat mask = cv::Mat::zeros(image.size(), image.type());
-    cv::fillConvexPoly(mask, points, cv::Scalar(255, 255, 255));
-    cv::Mat result;
-    image.copyTo(result, mask);
-    return result;
+inline cv::Mat extract_ROI(const cv::Mat &image,
+                           const std::vector<cv::Point> &points) {
+  cv::Mat mask = cv::Mat::zeros(image.size(), image.type());
+  cv::fillConvexPoly(mask, points, cv::Scalar(255, 255, 255));
+  cv::Mat result;
+  image.copyTo(result, mask);
+  return result;
 }
 
 /**
@@ -41,9 +40,9 @@ inline cv::Mat extract_ROI(const cv::Mat& image, const std::vector<cv::Point>& p
  * @return The distance between the two points.
  */
 template <typename T>
-inline T get_distance(const cv::Point_<T>& pointO, const cv::Point_<T>& pointA)
-{
-    return sqrt(pow(pointA.x - pointO.x, 2) + pow(pointA.y - pointO.y, 2));
+inline T get_distance(const cv::Point_<T> &pointO,
+                      const cv::Point_<T> &pointA) {
+  return sqrt(pow(pointA.x - pointO.x, 2) + pow(pointA.y - pointO.y, 2));
 }
 
 /**
@@ -53,8 +52,7 @@ inline T get_distance(const cv::Point_<T>& pointO, const cv::Point_<T>& pointA)
  * @return The slope of the line.
  */
 template <typename T>
-inline T get_slope(const cv::Point_<T>& pointA, const cv::Point_<T>& pointB)
-{
-    return (pointB.y - pointA.y) / (pointB.x - pointA.x);
+inline T get_slope(const cv::Point_<T> &pointA, const cv::Point_<T> &pointB) {
+  return (pointB.y - pointA.y) / (pointB.x - pointA.x);
 }
-}
+} // namespace reuv::basic_components
