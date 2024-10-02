@@ -1,6 +1,0 @@
-Invoking command in '/workspaces/reuv/re-uv_ws/build/uv-vision': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspaces/reuv/re-uv_ws/src/uv-vision -DCMAKE_INSTALL_PREFIX=/workspaces/reuv/re-uv_ws/install/uv-vision
-Invoked command in '/workspaces/reuv/re-uv_ws/build/uv-vision' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /workspaces/reuv/re-uv_ws/src/uv-vision -DCMAKE_INSTALL_PREFIX=/workspaces/reuv/re-uv_ws/install/uv-vision
-Invoking command in '/workspaces/reuv/re-uv_ws/build/uv-vision': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/uv-vision -- -j16 -l16
-Invoked command in '/workspaces/reuv/re-uv_ws/build/uv-vision' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /workspaces/reuv/re-uv_ws/build/uv-vision -- -j16 -l16
-Invoking command in '/workspaces/reuv/re-uv_ws/build/uv-vision': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/uv-vision
-Invoked command in '/workspaces/reuv/re-uv_ws/build/uv-vision' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /workspaces/reuv/re-uv_ws/build/uv-vision

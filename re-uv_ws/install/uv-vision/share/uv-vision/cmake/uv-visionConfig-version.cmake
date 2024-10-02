@@ -1,1 +1,0 @@
-/workspaces/reuv/re-uv_ws/build/uv-vision/ament_cmake_core/uv-visionConfig-version.cmake
