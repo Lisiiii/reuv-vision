@@ -31,6 +31,9 @@ public:
         cap_.release();
     }
 
+    float frame_center_x_ = 0;
+    float offset_ = 0;
+
     /**
      * @brief Start tracking
      */
@@ -39,6 +42,7 @@ public:
         cv::Mat frame;
         while (cap_.read(frame)) {
             try {
+                frame_center_x_ = static_cast<float>(frame.cols) / 2;
                 // Preprocess the image
                 cv::Mat preprocessed_image = preprocess_image(frame);
 
@@ -65,14 +69,16 @@ public:
 
                 // Calculate average intersection point
                 cv::Point2f average_point = compute_average_intersection_point(lanelines);
-                cv::circle(frame, average_point, 5, cv::Scalar(0, 255, 255), -1);
-                cv::line(frame, cv::Point(average_point.x, 0), cv::Point(average_point.x, frame.rows), cv::Scalar(0, 255, 0), 2);
+
+                offset_ = frame_center_x_ - average_point.x;
 
                 // Display the frame
-                cv::imshow("Lane Detection", frame);
-                if (cv::waitKey(50) == 'q') {
-                    break;
-                }
+                // cv::circle(frame, average_point, 5, cv::Scalar(0, 255, 255), -1);
+                // cv::line(frame, cv::Point(average_point.x, 0), cv::Point(average_point.x, frame.rows), cv::Scalar(0, 255, 0), 2);
+                // cv::imshow("Lane Detection", frame);
+                // if (cv::waitKey(50) == 'q') {
+                //     break;
+                // }
             } catch (const std::exception& e) {
                 std::cerr << e.what() << std::endl;
             }
