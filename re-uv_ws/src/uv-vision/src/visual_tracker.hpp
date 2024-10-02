@@ -71,14 +71,15 @@ public:
                 cv::Point2f average_point = compute_average_intersection_point(lanelines);
 
                 offset_ = frame_center_x_ - average_point.x;
+                std::cout << offset_ << std::endl;
 
                 // Display the frame
-                // cv::circle(frame, average_point, 5, cv::Scalar(0, 255, 255), -1);
-                // cv::line(frame, cv::Point(average_point.x, 0), cv::Point(average_point.x, frame.rows), cv::Scalar(0, 255, 0), 2);
-                // cv::imshow("Lane Detection", frame);
-                // if (cv::waitKey(50) == 'q') {
-                //     break;
-                // }
+                cv::circle(frame, average_point, 5, cv::Scalar(0, 255, 255), -1);
+                cv::line(frame, cv::Point(average_point.x, 0), cv::Point(average_point.x, frame.rows), cv::Scalar(0, 255, 0), 2);
+                cv::imshow("Lane Detection", frame);
+                if (cv::waitKey(50) == 'q') {
+                    break;
+                }
             } catch (const std::exception& e) {
                 std::cerr << e.what() << std::endl;
             }
